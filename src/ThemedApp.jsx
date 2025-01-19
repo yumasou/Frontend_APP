@@ -18,6 +18,7 @@ export function useApp() {
 function ThemedApp() {
   const [showForm, setShowForm] = useState(false);
   const [globalmsg, setGlobalmsg] = useState(false);
+  const [auth,setAuth]=useState()
 
   const router = createBrowserRouter([
     {
@@ -27,17 +28,17 @@ function ThemedApp() {
         { path: "/", element: <PostList /> },
         { path: "/login", element: <Login /> },
         { path: "/register", element: <Register /> },
-        // { path: "/posts", element: <PostList /> },
         { path: "posts/:id", element: <CommentList /> },
         {path:"profile/:id",element:<Profile/>}
       ],
     },
   ]);
-  console.log(showForm)
+  console.log(auth)
+  console.log(globalmsg)
   return (
     <ThemeProvider>
       <AppContext.Provider
-        value={{ showForm, setShowForm, globalmsg, setGlobalmsg }}
+        value={{ showForm, setShowForm, globalmsg, setGlobalmsg,auth,setAuth }}
       >
         <QueryClientProvider client={queryClient}>
           <RouterProvider router={router} />
