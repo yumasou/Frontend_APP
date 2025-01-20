@@ -11,15 +11,20 @@ function PostItem({ createdAt, content, user, remove, id, userId }) {
       className="shadow-lg cursor-pointer rounded-lg justify-between  mx-auto  min-w-full space-y-5 px-8 py-5 border hover:ring-1"
     >
       <div className="flex justify-between">
-        <div className="text-sm">{formatRelative(createdAt, new Date())}</div>
+        <div className="text-sm text-blue-500">
+          {formatRelative(createdAt, new Date())}
+        </div>
         <div>
-          <a
-            href="#"
-            onClick={() => remove(id)}
+          <button
+            onClick={(e) => {
+              remove(id);
+              e.stopPropagation();
+              nevigate("/");
+            }}
             style={{ textDecoration: "none" }}
           >
-            <RiDeleteBin5Line />
-          </a>
+            <RiDeleteBin5Line className=" fill-red-600" />
+          </button>
         </div>
       </div>
       <div className=" leading-8 tracking-wide text-pretty indent-0">
@@ -27,11 +32,18 @@ function PostItem({ createdAt, content, user, remove, id, userId }) {
       </div>
       <div className="flex gap-2 ">
         <div>
-          <img src="" alt="" className="rounded-full w-5 h-5" />
+          <img
+            src=""
+            alt=""
+            className="rounded-full border border-green-800 w-5 h-5"
+          />
         </div>
         <button
-          onClick={() => nevigate(`/profile/${userId}`)}
-          className="font-bold"
+          onClick={(e) => {
+            nevigate(`/profile/${userId}`);
+            e.stopPropagation();
+          }}
+          className="font-bold text-blue-600"
         >
           {user}
         </button>

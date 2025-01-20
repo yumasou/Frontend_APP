@@ -7,14 +7,12 @@ import { useMutation } from "react-query";
 import { queryClient } from "../ThemedApp";
 function Profile() {
   const { id } = useParams();
-  console.log(id);
   const api = import.meta.env.VITE_API;
   const fetchUser = async () => {
     const res = await axios.get(`${api}/users/${id}`);
     return res.data;
   };
   const { isLoading, isError, error, data } = useQuery("users", fetchUser);
-  console.log(data);
 
   const deletePost = async (id) => {
     await axios.delete(`${api}/content/posts/${id}`);
@@ -40,7 +38,7 @@ function Profile() {
     return <div>Error</div>;
   }
   return (
-    <div className="w-4/5 sm:w-2/6 mx-auto">
+    <div className="w-4/5 sm:w-2/6 mx-auto my-5">
       <div className="bg-gray-400 w-full h-48 rounded-lg"></div>
       <div className="-mt-16 space-y-2 mb-5">
         <div

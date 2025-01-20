@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useApp } from "../ThemedApp";
 
 function Login() {
-  const {setAuth,setGlobalmsg}=useApp()
+  const { setAuth, setGlobalmsg } = useApp();
   const userRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
@@ -19,8 +19,9 @@ function Login() {
   const create = useMutation(async (data) => postLogin(data), {
     onError: async () => setGlobalmsg("Error, can't login"),
     onSuccess: async (result) => {
-      localStorage.setItem("token",result.data.token)
-      setAuth(result.data.user)
+      localStorage.setItem("token", result.data.token);
+      localStorage.setItem("user", JSON.stringify(result.data.user));
+      setAuth(result.data.user);
       navigate("/");
     },
   });
@@ -40,13 +41,13 @@ function Login() {
             type="text"
             placeholder="username"
             ref={userRef}
-            className="w-full border rounded-lg leading-9  placeholder:text-slate-500 px-5"
+            className="w-full border rounded-lg leading-9  text-slate-700 px-5"
           />
           <input
             type="password"
             placeholder="password"
             ref={passwordRef}
-            className="w-full border rounded-lg leading-9  placeholder:text-slate-500 px-5"
+            className="w-full border rounded-lg leading-9  text-slate-700 px-5"
           />
           <button
             type="submit"

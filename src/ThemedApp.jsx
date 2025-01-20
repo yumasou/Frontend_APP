@@ -1,4 +1,4 @@
-import Home from "./Pages/Home";
+
 import { useState } from "react";
 import ThemeProvider from "./Utils/ThemeProvider.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -18,8 +18,8 @@ export function useApp() {
 function ThemedApp() {
   const [showForm, setShowForm] = useState(false);
   const [globalmsg, setGlobalmsg] = useState(false);
-  const [auth,setAuth]=useState()
-
+  const [drawer,setDrawer]=useState(false)
+  const [auth,setAuth]=useState(JSON.parse(localStorage.getItem("user")))
   const router = createBrowserRouter([
     {
       path: "/",
@@ -33,12 +33,11 @@ function ThemedApp() {
       ],
     },
   ]);
-  console.log(auth)
-  console.log(globalmsg)
+
   return (
     <ThemeProvider>
       <AppContext.Provider
-        value={{ showForm, setShowForm, globalmsg, setGlobalmsg,auth,setAuth }}
+        value={{ showForm, setShowForm,setDrawer,drawer, globalmsg, setGlobalmsg,auth,setAuth }}
       >
         <QueryClientProvider client={queryClient}>
           <RouterProvider router={router} />

@@ -4,7 +4,7 @@ import { formatRelative } from "date-fns";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { queryClient } from "../ThemedApp";
 import axios from "axios";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 function Item({ data }) {
   const api = import.meta.env.VITE_API;
   const nevigate = useNavigate();
@@ -19,26 +19,26 @@ function Item({ data }) {
       nevigate('/')
     },
   });
-  console.log(data);
+  
   return (
-    <div className=" border shawdow-lg rounded-lg p-6 ">
+   data && <div className=" border shawdow-lg rounded-lg p-6 ">
       <div className="flex justify-between leading-6">
         <div className="flex  gap-2">
           <div>
-            <img src="" alt="" className="rounded-full h-5 w-5 " />
+            <img src="" alt="" className="rounded-full h-5 w-5 border border-green-800" />
           </div>
           <button
             onClick={() => nevigate(`/profile/${data.user.id}`)}
-            className="font-bold "
+            className="font-bold text-blue-600 leading-5"
           >
             {data.user.name}
           </button>
         </div>
         <button onClick={() => remove.mutate()}>
-          <RiDeleteBin5Line />
+          <RiDeleteBin5Line className="fill-red-600"/>
         </button>
       </div>
-      <p className=" indent-6 text-sm font-thin ">
+      <p className=" indent-6 text-sm font-thin text-blue-500">
         {formatRelative(data.createAt, new Date())}
       </p>
       <p className="tracking-wide leading-8 py-5">{data.content}</p>

@@ -1,28 +1,56 @@
 import React, { useRef } from "react";
 import { useApp } from "../ThemedApp";
+import { useMutation, useQuery } from "react-query";
+import { fetchPost, postPost } from "../libs/fetcher";
+
 function AddPost(props) {
-  
-  const { showForm } = useApp();
+  const contentRef = useRef();
+  const { setShowForm, showForm, auth, setGlobalmsg } = useApp();
+  const { refetch } = useQuery("posts", fetchPost);
+  const handleSubmit = () => {
+    const content = contentRef.current.value;
+    const userId = auth.id;
+    if (userId && content) {
+      create.mutate({ content, userId });
+    } else {
+      setGlobalmsg("post can't blank");
+    }
+  };
+  const create = useMutation((data) => postPost(data), {
+    onError: () => {
+      setGlobalmsg("can't create post");
+    },
+    onSuccess: (result) => {
+      refetch();
+      setGlobalmsg("add new post");
+      setShowForm(false);
+    },
+  });
+
   return (
-    showForm && (
+    showForm &&
+    auth && (
       <form
-        className="w-4/5 sm:w-2/6 mx-auto"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+        className="w-4/5 sm:w-2/6 mx-auto my-5 sticky top-0 bg-slate-900"
       >
-        <textarea placeholder="text here to post" name="post" id="post" className="p-4 indent-2 w-full border rounded-lg">
-          
-        </textarea>
-        
-        <a
-          href="#"
-          style={{
-            textDecoration: "none",
-            border: "1px solid lightgreen",
-            padding: "5px 10px",
-            borderRadius: "5px",
-          }}
+        <textarea
+          ref={contentRef}
+          placeholder="text here to post"
+          name="post"
+          id="post"
+          className="p-4 indent-2 w-full text-slate-700 border rounded-lg"
+        ></textarea>
+
+        <button
+          type="submit"
+          className="px-10 py-1 border-green-500 rounded-lg border text-green-500"
         >
           Add
-        </a>
+        </button>
       </form>
     )
   );
