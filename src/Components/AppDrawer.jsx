@@ -21,29 +21,32 @@ function AppDrawer() {
           {`Welcome ${auth ? auth.username : "Guest"}`}
         </div>
         <ul className="space-y-2 p-4">
-          <li>
-            <button
-              onClick={() => {
-                navigate(`/profile/${auth.id}`);
-                setDrawer(false);
-              }}
-              className="block px-4 py-2 rounded hover:bg-blue-100 text-blue-600"
-            >
-              Profile
-            </button>
-          </li>
-
-          <li>
-            <button
-              onClick={() => {
-                logout();
-                setDrawer(false);
-              }}
-              className="block px-4 py-2 rounded hover:bg-blue-100 text-blue-600"
-            >
-              Logout
-            </button>
-          </li>
+          {auth && (
+            <li>
+              <button
+                onClick={() => {
+                  navigate(`/profile/${auth.id}`);
+                  setDrawer(false);
+                }}
+                className="block px-4 py-2 rounded hover:bg-blue-100 text-blue-600"
+              >
+                Profile
+              </button>
+            </li>
+          )}
+          {auth && (
+            <li>
+              <button
+                onClick={() => {
+                  logout();
+                  setDrawer(false);
+                }}
+                className="block px-4 py-2 rounded hover:bg-blue-100 text-blue-600"
+              >
+                Logout
+              </button>
+            </li>
+          )}
           <li>
             <button className="block px-4 py-2 rounded hover:bg-blue-100 text-blue-600">
               Settings

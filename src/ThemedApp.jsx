@@ -17,7 +17,7 @@ export function useApp() {
 }
 function ThemedApp() {
   const [showForm, setShowForm] = useState(false);
-  const [globalmsg, setGlobalmsg] = useState(false);
+  const [globalmsg, setGlobalmsg] = useState({massage:null});
   const [drawer,setDrawer]=useState(false)
   const [auth,setAuth]=useState(JSON.parse(localStorage.getItem("user")))
   const router = createBrowserRouter([

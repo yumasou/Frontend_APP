@@ -1,50 +1,76 @@
 import React, { useRef } from "react";
 import { useApp } from "../ThemedApp";
-import axios from "axios";
+import { queryClient } from "../ThemedApp";
+import { removeComment } from "../libs/fetcher";
 import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import Item from "../Components/Item";
 import Comment from "../Components/Comment";
-import { postComment } from "../libs/fetcher";
+import { postComment, fetchComments } from "../libs/fetcher";
 
 function CommentList() {
   const commentRef = useRef();
   const { setGlobalmsg, auth } = useApp();
   const { id } = useParams();
-  const api = import.meta.env.VITE_API;
 
-  const fetchComments = async () => {
-    const res = await axios.get(`${api}/content/posts/${id}`);
-    return res.data.data;
-  };
-  const { refetch } = useQuery("comments", fetchComments);
-  const { isLoading, isError, error, data } = useQuery(
-    "comments",
-    fetchComments
+  const { refetch, isLoading, isError, error, data } = useQuery(
+    ["comments", id],
+    () => fetchComments(id),
+    
   );
-
+console.log(data)
   const addComment = () => {
     const postId = id;
     const userId = auth.id;
     const content = commentRef.current.value;
-    try{
+    try {
       if (userId && content) {
         create.mutate({ userId, content, postId });
       } else {
-        setGlobalmsg("comment can't blank");
+        setGlobalmsg({ massage: "comment can't blank" });
       }
-    }catch(e){
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
   };
 
-  const create = useMutation((data) => postComment(data), {
-    onError: () => setGlobalmsg("comment fail"),
+  const create = useMutation((datas) => postComment(datas), {
+    onError: () => setGlobalmsg({ massage: "comment fail" }),
     onSuccess: (result) => {
       refetch();
-      setGlobalmsg("add new comment");
-      commentRef.current.value=""
+      setGlobalmsg({ massage: "add new comment" });
+      commentRef.current.value = "";
     },
+  });
+
+  const remove = useMutation((ids) => removeComment(ids), {
+    onMutate: async (ids) => {
+      // Cancel ongoing queries for "comments"
+      await queryClient.cancelQueries(["comments", id]);
+
+      // Get the previous comments from the cache
+      const previousComments = queryClient.getQueryData(["comments", id]);
+      
+      if (previousComments) {
+        // Optimistically update the cache
+        queryClient.setQueryData(["comments", id], (old) => {
+          
+          return ({ ...old,
+            comments: old.comments.filter((m) => m.id !== ids),
+            // Filter out the deleted comment
+          });
+        });
+      }
+      return { previousComments };
+    },
+    onError: (error, id, context) => {
+      if (context?.previousComments) {
+        queryClient.setQueryData(["comments", id], context.previousComments);
+      }
+      setGlobalmsg({ massage: "Failed to delete comment" });
+    },
+    
+    
   });
 
   if (isLoading) {
@@ -61,7 +87,9 @@ function CommentList() {
         <section>
           <div className="mt-10 font-bold">comments</div>
           {data.comments &&
-            data.comments.map((m) => <Comment key={m.id} comment={m} />)}
+            data.comments.map((m) => (
+              <Comment key={m.id} comment={m} remove={remove.mutate} />
+            ))}
         </section>
       )}
 

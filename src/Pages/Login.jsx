@@ -17,7 +17,7 @@ function Login() {
     create.mutate({ username, password });
   };
   const create = useMutation(async (data) => postLogin(data), {
-    onError: async () => setGlobalmsg("Error, can't login"),
+    onError: async () => setGlobalmsg({massage:"Error, can't login"}),
     onSuccess: async (result) => {
       localStorage.setItem("token", result.data.token);
       localStorage.setItem("user", JSON.stringify(result.data.user));

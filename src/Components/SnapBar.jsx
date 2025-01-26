@@ -11,10 +11,12 @@ function SnapBar() {
   return (
     showsnap && (
       <div className="fixed bottom-20 right-9">
-        <div className="flex gap-2 items-center ">
-          <MdNotificationsActive className="fill-yellow-500  " size={50}/>
-          <p className="text-red-500  font-bold text-xl">{`${globalmsg} !`}</p>
-        </div>
+        {globalmsg.massage && (
+          <div className="flex gap-2 items-center ">
+            <MdNotificationsActive className="fill-yellow-500  " size={50} />
+            <p className="text-red-500  font-bold text-xl">{`${globalmsg.massage} !`}</p>
+          </div>
+        )}
       </div>
     )
   );

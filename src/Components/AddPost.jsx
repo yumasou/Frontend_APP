@@ -13,16 +13,16 @@ function AddPost(props) {
     if (userId && content) {
       create.mutate({ content, userId });
     } else {
-      setGlobalmsg("post can't blank");
+      setGlobalmsg({massage:"post can't blank"});
     }
   };
   const create = useMutation((data) => postPost(data), {
     onError: () => {
-      setGlobalmsg("can't create post");
+      setGlobalmsg({massage:"can't create post"});
     },
     onSuccess: (result) => {
       refetch();
-      setGlobalmsg("add new post");
+      setGlobalmsg({massage:"add new post"});
       setShowForm(false);
     },
   });

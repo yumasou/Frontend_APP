@@ -20,17 +20,17 @@ function Register() {
     const bio = bioRef.current.value;
     const password = passwordRef.current.value;
     if (!name || !username || !email || !password) {
-      setGlobalmsg("username or password missing");
+      setGlobalmsg({massage:"username or password missing"});
     } else {
       create.mutate({ name, username, email, bio, password });
     }
   };
   const create = useMutation((data) => postUser(data), {
     onError: () => {
-      setGlobalmsg("can't create user");
+      setGlobalmsg({massage:"can't create user"});
     },
     onSuccess: (result) => {
-      setGlobalmsg("user created");
+      setGlobalmsg({massage:"user created"});
       navigate("/login");
     },
   });
