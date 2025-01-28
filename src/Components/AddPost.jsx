@@ -35,7 +35,7 @@ function AddPost(props) {
           e.preventDefault();
           handleSubmit();
         }}
-        className="w-4/5 sm:w-2/6 mx-auto my-5 sticky top-0 bg-slate-900"
+        className="w-4/5 lg:w-2/6 mx-auto my-5 sticky top-0 "
       >
         <textarea
           ref={contentRef}
@@ -47,7 +47,7 @@ function AddPost(props) {
 
         <button
           type="submit"
-          className="px-10 py-1 border-green-500 rounded-lg border text-green-500"
+          className="px-10 py-1 border-green-500 bg-slate-600 rounded-lg border text-green-500"
         >
           Add
         </button>

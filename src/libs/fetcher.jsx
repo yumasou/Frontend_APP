@@ -27,25 +27,33 @@ export const postUser = async ({ name, username, email, password, bio }) => {
 export const postPostLike = async ({ id }) => {
   const token = getToken();
   try {
-    const result = await axios.post(`${api}/content/like/posts/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const result = await axios.post(
+      `${api}/content/like/posts/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return result;
   } catch (e) {
     console.log(e);
   }
 };
 
-export const postCommentLikes = async (id) => {
+export const postCommentLike = async ({ id }) => {
   const token = getToken();
   try {
-    const result = await axios.post(`${api}/content/like/comments/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const result = await axios.post(
+      `${api}/content/like/comments/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return result;
   } catch (e) {
     console.log(e);
@@ -83,6 +91,24 @@ export const postComment = async ({ content, userId, postId }) => {
   return res;
 };
 
+export const postFollow = async ({ id }) => {
+  const token = getToken();
+  try {
+    const result = await axios.post(
+      `${api}/follow/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 /***
  * Get
  */
@@ -101,13 +127,21 @@ export const fetchUser = async (id) => {
   return res.data;
 };
 
+export const fetchPostLikes = async (id) => {
+  const res = await axios.get(`${api}/content/likes/posts/${id}`);
+  return res.data;
+};
+
+export const fetchCommentLikes = async (id) => {
+  const res = await axios.get(`${api}/content/likes/comments/${id}`);
+  return res.data;
+};
 /***
  * Delete
  */
 
 export const deletePost = async (id) => {
   const token = getToken();
-  console.log(id);
   try {
     const result = await axios.delete(`${api}/content/posts/${id}`, {
       headers: {
@@ -135,26 +169,48 @@ export const removeComment = async (id) => {
   }
 };
 
-export const unlikePost = async (id) => {
+export const unlikePost = async ({ id }) => {
   const token = getToken();
-  try{
+  try {
     const result = await axios.delete(`${api}/content/unlike/posts/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-   return result
-  }catch(e){console.log(e)}
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
-export const unlikeComment = async (id) => {
+export const unlikeComment = async ({ id }) => {
   const token = getToken();
-  try{
+  try {
     const result = await axios.delete(`${api}/content/unlike/comments/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-   return result
-  }catch(e){console.log(e)}
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+
+export const unFollow = async ({ id }) => {
+  const token = getToken();
+  try {
+    const result = await axios.delete(
+      `${api}/unfollow/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
 };

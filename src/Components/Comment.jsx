@@ -2,14 +2,14 @@ import { formatRelative } from "date-fns";
 import React,{useState} from "react";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-import { GoHeart } from "react-icons/go";
-import { GoHeartFill } from "react-icons/go";
+
+import LikeButton from "./LikeButton";
 function Comment({ comment,remove }) {
-const [liked, setLike] = useState(true);
+
   const navigate = useNavigate();
-console.log(comment)
+
   return (
-    <div className="flex flex-col rounded-lg p-5 tracking-wide leading-8">
+   comment && <div className="flex flex-col rounded-lg p-5 tracking-wide leading-8">
       <div className="flex justify-between">
         <div
           onClick={() => navigate(`/profile/${comment.userId}`)}
@@ -31,10 +31,7 @@ console.log(comment)
       <div className=" text-sm leading-9 tracking-wide ">{comment.content}</div>
       <div className="flex justify-between align-bottom text-sm ">
         <div className="font-thin text-blue-600">{formatRelative(comment.createAt, new Date())}</div>
-        <div className="flex gap-1 items-center">
-          <button>{liked ? <GoHeartFill fill="green" size={20}/> : <GoHeart size={20} />}</button>
-          <span className="inline-block text-green-600">{comment._count.commentLikes}</span>{" "}
-        </div>
+        <LikeButton comment={comment}/>
       </div>
     </div>
   );

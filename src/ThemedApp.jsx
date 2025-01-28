@@ -10,6 +10,7 @@ import { createContext, useContext } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import PostList from "./Pages/PostList.jsx";
 import CommentList from "./Pages/CommentList.jsx";
+import Like from "./Pages/Like.jsx";
 const AppContext = createContext();
 export const queryClient = new QueryClient();
 export function useApp() {
@@ -29,7 +30,8 @@ function ThemedApp() {
         { path: "/login", element: <Login /> },
         { path: "/register", element: <Register /> },
         { path: "posts/:id", element: <CommentList /> },
-        {path:"profile/:id",element:<Profile/>}
+        {path:"profile/:id",element:<Profile/>},
+        {path:"likes/:type/:id",element:<Like/>}
       ],
     },
   ]);

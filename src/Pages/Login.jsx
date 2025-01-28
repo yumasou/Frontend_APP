@@ -32,7 +32,7 @@ function Login() {
         e.preventDefault();
         handleSubmit();
       }}
-      className="w-4/5 sm:w-2/6 mx-auto"
+      className="w-4/5 lg:w-2/6 mx-auto"
     >
       <div className="py-12">
         <h3 className="text-center text-5xl font-bold my-16">Login</h3>

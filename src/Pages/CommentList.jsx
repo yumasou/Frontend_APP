@@ -18,7 +18,7 @@ function CommentList() {
     () => fetchComments(id),
     
   );
-console.log(data)
+// console.log(data)
   const addComment = () => {
     const postId = id;
     const userId = auth.id;
@@ -81,7 +81,7 @@ console.log(data)
     return <div>Error</div>;
   }
   return (
-    <div className="w-4/5 sm:w-2/6 mx-auto py-10 flex flex-col leading-8 ">
+    <div className="w-4/5 lg:w-2/6 mx-auto py-10 flex flex-col leading-8 ">
       <Item data={data} />
       {data && (
         <section>

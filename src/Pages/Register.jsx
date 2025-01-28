@@ -35,7 +35,7 @@ function Register() {
     },
   });
   return (
-    <div className="w-4/5 sm:w-2/6 mx-auto">
+    <div className="w-4/5 lg:w-2/6 mx-auto">
       <div className="py-12">
         <h3 className="text-center font-bold my-16 text-5xl">Register</h3>
         <form

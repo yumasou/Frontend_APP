@@ -8,6 +8,7 @@ import { useMutation } from "react-query";
 import { queryClient } from "../ThemedApp";
 import { fetchUser, deletePost } from "../libs/fetcher";
 import { useApp } from "../ThemedApp";
+import FollowButton from "../Components/FollowButton";
 function Profile() {
   const { auth } = useApp();
   const { id } = useParams();
@@ -28,6 +29,7 @@ function Profile() {
       queryClient.invalidateQueries(["posts"]);
     },
   });
+  data && console.log(data.posts)
   if (isLoading) {
     return <div>Loading</div>;
   }
@@ -35,7 +37,7 @@ function Profile() {
     return <div>Error</div>;
   }
   return (
-    <div className="w-4/5 sm:w-2/6 mx-auto my-5">
+    <div className="w-4/5 lg:w-2/6 mx-auto my-5">
       <div className="bg-gray-400 w-full h-48 rounded-lg"></div>
       <div className="-mt-16 space-y-2 mb-5">
         <div className=" w-28 h-28 mx-auto rounded-full bg-slate-700"></div>
@@ -51,20 +53,7 @@ function Profile() {
             <div>Follower</div>
           </div>
           <div>
-            {" "}
-            {data.id === auth.id ? (
-              ""
-            ) : (
-              <button>
-                {(followed)?
-                <MdOutlineLibraryAddCheck
-                  size={22}
-                  stroke="fill"
-                  className="text-green-600"
-                />
-                :<MdOutlineLibraryAdd size={22} className="text-blue-600" />
-                }</button>
-            )}
+            <FollowButton user={data}/>
           </div>
         </div>
       </div>
@@ -73,12 +62,8 @@ function Profile() {
         {data.posts &&
           data.posts.map((m) => (
             <PostItem
-              createdAt={m.createAt}
-              id={m.id}
-              userId={m.userId}
-              user={data.name}
-              content={m.content}
               key={m.id}
+              item={m}
               remove={remove.mutate}
             />
           ))}
