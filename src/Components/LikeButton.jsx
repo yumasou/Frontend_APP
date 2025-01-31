@@ -10,11 +10,11 @@ function LikeButton({ item, comment }) {
   const { auth } = useApp();
   const liked = () => {
     if (!auth) return false;
-    if (item && !item.PostLikes && comment && !comment.commentLikes)
+    if (item && !item.postLikes && comment && !comment.commentLikes)
       return false;
     if (
-      (item && item.PostLikes.some((like) => like.userId === auth.id)) ||
-      (comment && comment.commentLikes.some((like) => like.userId === auth.id))
+      (item && item.postLikes.find((like) => like.userId === auth.id)) ||
+      (comment && comment.commentLikes.find((like) => like.userId === auth.id))
     )
       return true;
   };
@@ -52,7 +52,7 @@ function LikeButton({ item, comment }) {
 })
 
   return (
-    <div className="flex gap-1 items-center">
+   (item || comment) && <div className="flex gap-1 items-center">
       <button 
       onClick={e=>{liked()?
         (comment)?removeCommentLike.mutate(comment.id):removePostLike.mutate(item.id)

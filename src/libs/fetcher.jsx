@@ -26,6 +26,9 @@ export const postUser = async ({ name, username, email, password, bio }) => {
 
 export const postPostLike = async ({ id }) => {
   const token = getToken();
+  if (!token) {
+    throw new Error("User is not authenticated");
+  }
   try {
     const result = await axios.post(
       `${api}/content/like/posts/${id}`,
@@ -44,6 +47,9 @@ export const postPostLike = async ({ id }) => {
 
 export const postCommentLike = async ({ id }) => {
   const token = getToken();
+  if (!token) {
+    throw new Error("User is not authenticated");
+  }
   try {
     const result = await axios.post(
       `${api}/content/like/comments/${id}`,
@@ -61,6 +67,9 @@ export const postCommentLike = async ({ id }) => {
 };
 export const postPost = async ({ content, userId }) => {
   const token = getToken();
+  if (!token) {
+    throw new Error("User is not authenticated");
+  }
   const res = await axios.post(
     `${api}/content/posts`,
     { content, userId },
@@ -75,6 +84,9 @@ export const postPost = async ({ content, userId }) => {
 
 export const postComment = async ({ content, userId, postId }) => {
   const token = getToken();
+  if (!token) {
+    throw new Error("User is not authenticated");
+  }
   const res = await axios.post(
     `${api}/content/comments`,
     {
@@ -93,6 +105,9 @@ export const postComment = async ({ content, userId, postId }) => {
 
 export const postFollow = async ({ id }) => {
   const token = getToken();
+  if (!token) {
+    throw new Error("User is not authenticated");
+  }
   try {
     const result = await axios.post(
       `${api}/follow/${id}`,
@@ -142,6 +157,9 @@ export const fetchCommentLikes = async (id) => {
 
 export const deletePost = async (id) => {
   const token = getToken();
+  if (!token) {
+    throw new Error("User is not authenticated");
+  }
   try {
     const result = await axios.delete(`${api}/content/posts/${id}`, {
       headers: {
@@ -156,6 +174,9 @@ export const deletePost = async (id) => {
 
 export const removeComment = async (id) => {
   const token = getToken();
+  if (!token) {
+    throw new Error("User is not authenticated");
+  }
   try {
     const result = await axios.delete(`${api}/content/comments/${id}`, {
       headers: {
@@ -171,6 +192,9 @@ export const removeComment = async (id) => {
 
 export const unlikePost = async ({ id }) => {
   const token = getToken();
+  if (!token) {
+    throw new Error("User is not authenticated");
+  }
   try {
     const result = await axios.delete(`${api}/content/unlike/posts/${id}`, {
       headers: {
@@ -185,6 +209,9 @@ export const unlikePost = async ({ id }) => {
 
 export const unlikeComment = async ({ id }) => {
   const token = getToken();
+  if (!token) {
+    throw new Error("User is not authenticated");
+  }
   try {
     const result = await axios.delete(`${api}/content/unlike/comments/${id}`, {
       headers: {
@@ -197,18 +224,17 @@ export const unlikeComment = async ({ id }) => {
   }
 };
 
-
 export const unFollow = async ({ id }) => {
   const token = getToken();
+  if (!token) {
+    throw new Error('User is not authenticated');
+  }
   try {
-    const result = await axios.delete(
-      `${api}/unfollow/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const result = await axios.delete(`${api}/unfollow/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return result;
   } catch (e) {
     console.log(e);
