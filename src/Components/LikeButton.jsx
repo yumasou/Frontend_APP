@@ -5,7 +5,9 @@ import { queryClient } from "../ThemedApp";
 import { useMutation } from "react-query";
 import { useApp } from "../ThemedApp";
 import { postCommentLike,postPostLike,unlikeComment,unlikePost } from "../libs/fetcher";
+import { useNavigate } from "react-router-dom";
 function LikeButton({ item, comment }) {
+  const navigate=useNavigate()
   // console.log(item, comment);
   const { auth } = useApp();
   const liked = () => {
@@ -69,7 +71,11 @@ function LikeButton({ item, comment }) {
           <GoHeart size={20} className="text-pink-600" />
         )}
       </button>
-      <button className="inline-block text-green-600">
+      <button onClick={e=>{
+        if(item){navigate(`/likes/post/${item.id}`)}
+        if(comment) {navigate(`/likes/comment/${comment.id}`)}
+        e.stopPropagation()
+      }} className="inline-block text-green-600">
         {(item && item._count.postLikes) ||
           (comment && comment._count.commentLikes)}
       </button>

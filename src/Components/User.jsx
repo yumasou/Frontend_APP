@@ -1,9 +1,8 @@
 import React from "react";
 import FollowButton from "./FollowButton";
-import { useApp } from "../ThemedApp";
 import { useNavigate } from "react-router-dom";
 function User({ user }) {
-  const { auth } = useApp();
+
   const nevigate = useNavigate();
   return (
     <div className="flex justify-between  py-6 sm:py-7 my-3 frist:mt-3 last:mb-3 border  px-3 sm:px-6 shadow-md rounded-lg items-center">

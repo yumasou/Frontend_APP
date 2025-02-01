@@ -11,7 +11,7 @@ function AppDrawer() {
     navigate("/");
   };
   return (
-    <div className="relative">
+    <div className="relative bg-slate-100 dark:bg-slate-900">
       <div
         className={` ${
           drawer ? "visible" : "invisible"
@@ -47,11 +47,11 @@ function AppDrawer() {
               </button>
             </li>
           )}
-          <li>
+          {/* <li>
             <button className="block px-4 py-2 rounded hover:bg-blue-100 text-blue-600">
               Settings
             </button>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>

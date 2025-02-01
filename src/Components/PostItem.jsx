@@ -14,7 +14,7 @@ function PostItem({ remove, item }) {
         className="shadow-lg cursor-pointer rounded-lg justify-between my-4 mx-auto  min-w-full space-y-5 px-8 py-5 border hover:ring-1"
       >
         <div className="flex justify-between">
-          <div className="text-sm text-blue-500">
+          <div className="text-sm text-green-500">
             {formatRelative(item.createAt, new Date())}
           </div>
           <div>

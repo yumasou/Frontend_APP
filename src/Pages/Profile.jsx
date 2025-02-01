@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import { MdOutlineLibraryAdd } from "react-icons/md";
-import { MdOutlineLibraryAddCheck } from "react-icons/md";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PostItem from "../Components/PostItem";
 import { useMutation } from "react-query";
 import { queryClient } from "../ThemedApp";
 import { fetchUser, deletePost } from "../libs/fetcher";
-import { useApp } from "../ThemedApp";
+
 import FollowButton from "../Components/FollowButton";
 function Profile() {
-  const { auth } = useApp();
+  const navigate = useNavigate();
   const { id } = useParams();
-  const [followed, setFollow] = useState(true);
   const { isLoading, isError, error, data } = useQuery("users", () =>
     fetchUser(id)
   );
@@ -29,7 +26,7 @@ function Profile() {
       queryClient.invalidateQueries(["posts"]);
     },
   });
-  data && console.log(data.posts)
+
   if (isLoading) {
     return <div>Loading</div>;
   }
@@ -44,16 +41,26 @@ function Profile() {
         <h1 className="justify-self-center text-xl font-bold">{data.name}</h1>
         <p className="justify-self-center text-green-400">{data.bio}</p>
         <div className="flex mx-auto items-center justify-evenly">
-          <div className="flex gap-1">
+          <div
+            className="flex gap-1"
+            onClick={() => {
+              navigate(`/followers/user/${id}`);
+            }}
+          >
             <div className="text-blue-600">{data._count.followings}</div>
-            <div>Following</div>
-          </div>
-          <div className="flex gap-1">
-            <div className="text-blue-600">{data._count.followers}</div>
             <div>Follower</div>
           </div>
+          <div
+            onClick={() => {
+              navigate(`/followings/user/${id}`);
+            }}
+            className="flex gap-1"
+          >
+            <div className="text-blue-600">{data._count.followers}</div>
+            <div>Following</div>
+          </div>
           <div>
-            <FollowButton user={data}/>
+            <FollowButton user={data} />
           </div>
         </div>
       </div>
@@ -61,11 +68,7 @@ function Profile() {
         <h1 className="font-bold my-3 texl-xl indent-1">Posts..</h1>
         {data.posts &&
           data.posts.map((m) => (
-            <PostItem
-              key={m.id}
-              item={m}
-              remove={remove.mutate}
-            />
+            <PostItem key={m.id} item={m} remove={remove.mutate} />
           ))}
       </div>
     </div>

@@ -11,6 +11,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import PostList from "./Pages/PostList.jsx";
 import CommentList from "./Pages/CommentList.jsx";
 import Like from "./Pages/Like.jsx";
+import Followers from "./Pages/Followers.jsx";
+import Followings from "./Pages/Followings.jsx";
 const AppContext = createContext();
 export const queryClient = new QueryClient();
 export function useApp() {
@@ -31,7 +33,9 @@ function ThemedApp() {
         { path: "/register", element: <Register /> },
         { path: "posts/:id", element: <CommentList /> },
         {path:"profile/:id",element:<Profile/>},
-        {path:"likes/:type/:id",element:<Like/>}
+        {path:"likes/:type/:id",element:<Like/>},
+        {path:"followers/user/:id",element:<Followers/>},
+        {path:"followings/user/:id",element:<Followings/>}
       ],
     },
   ]);

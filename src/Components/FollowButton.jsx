@@ -8,6 +8,8 @@ function FollowButton({ user }) {
   const follow = useMutation((id) => postFollow({id}), {
     onSuccess: () => {
         queryClient.refetchQueries(["users"])
+        queryClient.refetchQueries("followers")
+        queryClient.refetchQueries("followings")
         queryClient.invalidateQueries(["likes"]);
     },
   });
@@ -15,11 +17,12 @@ function FollowButton({ user }) {
   const unfollow = useMutation((id) => unFollow({id}), {
     onSuccess: () => {
         queryClient.refetchQueries(["users"])
+        queryClient.refetchQueries("followers")
+        queryClient.refetchQueries("followings")
       queryClient.invalidateQueries(["likes"]);
     },
   });
 
-  console.log(user)
   const { auth } = useApp();
   const isMe = () => {
     return user.id === auth.id;

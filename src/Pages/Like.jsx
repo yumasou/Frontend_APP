@@ -15,12 +15,13 @@ function Like() {
     ["likes", id, type],
     fetchlike
   );
-console.log(data)
+// console.log(data)
   
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>isError</div>;
   return (
     <div className="w-4/5 lg:w-2/6 mx-auto  my-3">
+      <h1 className="font-bold text-3xl text-center my-5">Likes</h1>
       {data.likes.map((m) => (
         <User key={m.id} user={m.user}/>
       ))}

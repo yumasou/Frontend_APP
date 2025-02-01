@@ -151,6 +151,15 @@ export const fetchCommentLikes = async (id) => {
   const res = await axios.get(`${api}/content/likes/comments/${id}`);
   return res.data;
 };
+
+export const fetchFollowers=async(id)=>{
+  const res=await axios.get(`${api}/followers/${id}`)
+  return res.data
+}
+export const fetchFollowings=async(id)=>{
+  const res=await axios.get(`${api}/followings/${id}`)
+  return res.data
+}
 /***
  * Delete
  */

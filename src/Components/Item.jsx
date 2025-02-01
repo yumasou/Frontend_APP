@@ -38,7 +38,7 @@ function Item({ data }) {
             <RiDeleteBin5Line className="fill-red-600" />
           </button>
         </div>
-        <p className=" indent-6 text-sm font-thin text-blue-500">
+        <p className=" indent-6 text-sm font-thin text-green-500">
           {formatRelative(data.createAt, new Date())}
         </p>
         <p className="tracking-normal text-pretty leading-8 py-5">{data.content}</p>
