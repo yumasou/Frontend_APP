@@ -70,7 +70,7 @@ function LikeButton({ item, comment }) {
         )}
       </button>
       <button className="inline-block text-green-600">
-        {(item && item._count.PostLikes) ||
+        {(item && item._count.postLikes) ||
           (comment && comment._count.commentLikes)}
       </button>
     </div>
