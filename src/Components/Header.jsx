@@ -1,5 +1,6 @@
 import React from "react";
 import { BsFillMoonStarsFill, BsSun } from "react-icons/bs";
+import { FaSearch } from "react-icons/fa";
 import { TiThMenu } from "react-icons/ti";
 import { IoMdAddCircle } from "react-icons/io";
 import { useApp } from "../ThemedApp";
@@ -40,6 +41,15 @@ function Header() {
           }}
         >
           <IoMdAddCircle size={24} />
+        </button>
+        <button
+          onClick={() => {
+            nevigate("/search");
+            setShowForm(false);
+            setDrawer(false);
+          }}
+        >
+          <FaSearch size={20}/>
         </button>
         {!auth && (
           <div className="space-x-2">

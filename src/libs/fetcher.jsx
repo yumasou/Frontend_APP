@@ -152,14 +152,30 @@ export const fetchCommentLikes = async (id) => {
   return res.data;
 };
 
-export const fetchFollowers=async(id)=>{
-  const res=await axios.get(`${api}/followers/${id}`)
-  return res.data
-}
-export const fetchFollowings=async(id)=>{
-  const res=await axios.get(`${api}/followings/${id}`)
-  return res.data
-}
+export const fetchFollowers = async (id) => {
+  const res = await axios.get(`${api}/followers/${id}`);
+  return res.data;
+};
+export const fetchFollowings = async (id) => {
+  const res = await axios.get(`${api}/followings/${id}`);
+  return res.data;
+};
+
+export const searchUsers = async (search) => {
+  const res = await axios.get(`${api}/search?q=${search}`);
+  return res.data;
+};
+
+export const fetchFollowingPosts = async () => {
+  const token = getToken();
+  const res = await axios.get(`${api}/content/followingposts`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  console.log(res.data);
+  return res.data;
+};
 /***
  * Delete
  */
@@ -236,7 +252,7 @@ export const unlikeComment = async ({ id }) => {
 export const unFollow = async ({ id }) => {
   const token = getToken();
   if (!token) {
-    throw new Error('User is not authenticated');
+    throw new Error("User is not authenticated");
   }
   try {
     const result = await axios.delete(`${api}/unfollow/${id}`, {
