@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ThemeProvider from "./Utils/ThemeProvider.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Template from "./Template.jsx";
@@ -13,6 +13,8 @@ import Like from "./Pages/Like.jsx";
 import Followers from "./Pages/Followers.jsx";
 import Followings from "./Pages/Followings.jsx";
 import Search from "./Pages/Search.jsx";
+import Noti from "./Pages/Noti.jsx";
+import SocketProvider from "./Utils/SocketProvider.jsx";
 const AppContext = createContext();
 export const queryClient = new QueryClient();
 export function useApp() {
@@ -23,6 +25,7 @@ function ThemedApp() {
   const [globalmsg, setGlobalmsg] = useState({ massage: null });
   const [drawer, setDrawer] = useState(false);
   const [auth, setAuth] = useState(JSON.parse(localStorage.getItem("user")));
+ 
   const router = createBrowserRouter([
     {
       path: "/",
@@ -37,6 +40,7 @@ function ThemedApp() {
         { path: "followers/user/:id", element: <Followers /> },
         { path: "followings/user/:id", element: <Followings /> },
         { path: "search", element: <Search /> },
+        { path: "notifications", element: <Noti /> },
       ],
     },
   ]);
@@ -56,7 +60,9 @@ function ThemedApp() {
         }}
       >
         <QueryClientProvider client={queryClient}>
+          <SocketProvider>
           <RouterProvider router={router} />
+          </SocketProvider>
         </QueryClientProvider>
       </AppContext.Provider>
     </ThemeProvider>

@@ -12,7 +12,7 @@ function Search() {
       return searchUsers(deboundedQuery);
     }
   );
-  console.log(search, data);
+  
   if (isLoading) {
     return <div>Loading</div>;
   }

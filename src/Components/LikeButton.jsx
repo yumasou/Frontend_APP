@@ -8,7 +8,7 @@ import { postCommentLike,postPostLike,unlikeComment,unlikePost } from "../libs/f
 import { useNavigate } from "react-router-dom";
 function LikeButton({ item, comment }) {
   const navigate=useNavigate()
-  // console.log(item, comment);
+
   const { auth } = useApp();
   const liked = () => {
     if (!auth) return false;

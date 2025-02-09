@@ -1,9 +1,11 @@
 import axios from "axios";
-const getToken = () => {
+
+export const getToken = () => {
   return localStorage.getItem("token");
 };
-const api = import.meta.env.VITE_API;
+export const api = import.meta.env.VITE_API;
 
+  
 /***
  * Post
  */
@@ -176,6 +178,41 @@ export const fetchFollowingPosts = async () => {
   console.log(res.data);
   return res.data;
 };
+
+export const fetchNoti = async () => {
+  const token = getToken();
+  const res = await axios.get(`${api}/content/noti`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+};
+
+/**
+ * Put
+ */
+export const makeNotiRead=async(id)=>{
+  const token = getToken();
+  const res = await axios.put(`${api}/content/noti/read/${id}`,{}, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+ console.log(res)
+  return res.data;
+}
+
+export const makeAllNotiRead=async()=>{
+  const token = getToken();
+  const res = await axios.put(`${api}/content/noti/read`,{}, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+}
+
 /***
  * Delete
  */

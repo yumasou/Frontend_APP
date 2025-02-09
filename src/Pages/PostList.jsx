@@ -5,9 +5,10 @@ import { queryClient } from "../ThemedApp";
 import PostItem from "../Components/PostItem";
 import { fetchPost, deletePost, fetchFollowingPosts } from "../libs/fetcher";
 
+
 function PostList() {
   const { auth } = useApp();
-
+  
   const [lastPost, setLastPost] = useState(true);
   const { isLoading, isError, error, data } = useQuery(
     ["posts", lastPost],
@@ -19,7 +20,7 @@ function PostList() {
       }
     }
   );
-  console.log(lastPost);
+  // console.log(lastPost);
   const remove = useMutation((id) => deletePost(id), {
     onMutate: async (id) => {
       queryClient.cancelQueries(["posts"]);
