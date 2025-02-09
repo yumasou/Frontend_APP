@@ -18,6 +18,7 @@ function Header() {
   const { isLoading, isError, data } = useQuery(["Notis", auth], fetchNoti);
   const {notification}=useSocket()
   useEffect(()=>{
+   
       queryClient.invalidateQueries(["Notis",auth])
           queryClient.invalidateQueries("Notis")
      },[notification])
@@ -82,7 +83,7 @@ function Header() {
           <IoMdNotifications size={24} />
         </button>
         {!auth && (
-          <div className="space-x-2">
+          <div className="space-x-2 flex flex-col lg:flex-row font-bold">
             <button
               onClick={() => {
                 nevigate("/login");

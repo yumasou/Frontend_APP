@@ -181,12 +181,16 @@ export const fetchFollowingPosts = async () => {
 
 export const fetchNoti = async () => {
   const token = getToken();
-  const res = await axios.get(`${api}/content/noti`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return res.data;
+  try{
+    if(!token) return false
+    const res = await axios.get(`${api}/content/noti`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  }catch(e){console.log(e)}
+ 
 };
 
 /**

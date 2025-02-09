@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 function NotiItem({data,makeRead}) {
   const navigate = useNavigate();
   return (
-    <div
+   data &&  <div
       onClick={() => {
         makeRead(data.id)
         navigate(`/posts/${data.postId}`);
