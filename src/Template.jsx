@@ -7,10 +7,6 @@ import SnapBar from "./Components/SnapBar";
 
 function Template() {
 
-// useEffect(()=>{
-  
-// })
-
  
   return (
     <div className="min-w-full m-0 p-0">

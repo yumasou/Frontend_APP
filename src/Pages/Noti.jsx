@@ -8,7 +8,7 @@ import { makeAllNotiRead, makeNotiRead } from "../libs/fetcher";
 function Noti() {
   // const {notification}=useSocket()
   
-  const { auth } = useApp();
+  const { auth, } = useApp();
   const { data, isError, isLoading, error } = useQuery("Notis", fetchNoti);
 
   const allNotiRead = useMutation(() => makeAllNotiRead(), {

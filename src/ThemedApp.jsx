@@ -15,6 +15,8 @@ import Followings from "./Pages/Followings.jsx";
 import Search from "./Pages/Search.jsx";
 import Noti from "./Pages/Noti.jsx";
 import SocketProvider from "./Utils/SocketProvider.jsx";
+import Chat from "./Pages/Chat.jsx";
+import Conversation from "./Components/Conversation.jsx"
 const AppContext = createContext();
 export const queryClient = new QueryClient();
 export function useApp() {
@@ -25,7 +27,7 @@ function ThemedApp() {
   const [globalmsg, setGlobalmsg] = useState({ massage: null });
   const [drawer, setDrawer] = useState(false);
   const [auth, setAuth] = useState(JSON.parse(localStorage.getItem("user")));
- 
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -34,13 +36,18 @@ function ThemedApp() {
         { path: "/", element: <PostList /> },
         { path: "/login", element: <Login /> },
         { path: "/register", element: <Register /> },
-        { path: "posts/:id", element: <CommentList /> },
-        { path: "profile/:id", element: <Profile /> },
-        { path: "likes/:type/:id", element: <Like /> },
-        { path: "followers/user/:id", element: <Followers /> },
-        { path: "followings/user/:id", element: <Followings /> },
-        { path: "search", element: <Search /> },
-        { path: "notifications", element: <Noti /> },
+        { path: "/posts/:id", element: <CommentList /> },
+        { path: "/profile/:id", element: <Profile /> },
+        { path: "/likes/:type/:id", element: <Like /> },
+        { path: "/followers/user/:id", element: <Followers /> },
+        { path: "/followings/user/:id", element: <Followings /> },
+        { path: "/search", element: <Search /> },
+        { path: "/notifications", element: <Noti /> },
+        {
+          path: "/chat",
+          element: <Chat />,
+          children: [{ path: "/chat/:id", element: <Conversation /> }],
+        },
       ],
     },
   ]);
@@ -61,7 +68,7 @@ function ThemedApp() {
       >
         <QueryClientProvider client={queryClient}>
           <SocketProvider>
-          <RouterProvider router={router} />
+            <RouterProvider router={router} />
           </SocketProvider>
         </QueryClientProvider>
       </AppContext.Provider>

@@ -5,8 +5,8 @@ import PostItem from "../Components/PostItem";
 import { useMutation } from "react-query";
 import { queryClient } from "../ThemedApp";
 import { fetchUser, deletePost } from "../libs/fetcher";
-
 import FollowButton from "../Components/FollowButton";
+import MessageButton from "../Components/MessageButton";
 function Profile() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -58,6 +58,9 @@ function Profile() {
           >
             <div className="text-blue-600">{data._count.followers}</div>
             <div>Following</div>
+          </div>
+          <div>
+            <MessageButton userId={data.id} />
           </div>
           <div>
             <FollowButton user={data} />

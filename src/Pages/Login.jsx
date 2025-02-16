@@ -22,6 +22,7 @@ function Login() {
       localStorage.setItem("token", result.data.token);
       localStorage.setItem("user", JSON.stringify(result.data.user));
       setAuth(result.data.user);
+      setGlobalmsg({massage:"login Successful"})
       navigate("/");
     },
   });

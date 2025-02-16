@@ -5,7 +5,6 @@ export const getToken = () => {
 };
 export const api = import.meta.env.VITE_API;
 
-  
 /***
  * Post
  */
@@ -126,6 +125,42 @@ export const postFollow = async ({ id }) => {
   }
 };
 
+export const createChat = async (userIds) => {
+  const token = getToken();
+  console.log(userIds);
+  try {
+    if (!token) return false;
+    const res = await axios.post(
+      `${api}/chat/create`,
+      { userIds },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const sendMassage = async ({ chatId, content }) => {
+  const token = getToken();
+  try {
+    if (!token) return false;
+    const res = await axios.post(
+      `${api}/${chatId}/massage`,
+      { content },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
 /***
  * Get
  */
@@ -175,47 +210,107 @@ export const fetchFollowingPosts = async () => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(res.data);
+  // console.log(res.data);
   return res.data;
 };
 
 export const fetchNoti = async () => {
   const token = getToken();
-  try{
-    if(!token) return false
+  try {
+    if (!token) return false;
     const res = await axios.get(`${api}/content/noti`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     return res.data;
-  }catch(e){console.log(e)}
- 
+  } catch (e) {
+    console.log(e);
+  }
 };
 
+export const fetchChats = async () => {
+  const token = getToken();
+  try {
+    if (!token) return false;
+    const res = await axios.get(`${api}/chats`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const fetchMassages = async ({ chatId, limit, skip }) => {
+  const token = getToken();
+  try {
+    if (!token) return false;
+    const res = await axios.get(
+      `${api}/${chatId}/massages?limit=${limit}&skip=${skip}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    // console.log(res)
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
 /**
  * Put
  */
-export const makeNotiRead=async(id)=>{
+export const makeNotiRead = async (id) => {
   const token = getToken();
-  const res = await axios.put(`${api}/content/noti/read/${id}`,{}, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
- console.log(res)
+  const res = await axios.put(
+    `${api}/content/noti/read/${id}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
   return res.data;
-}
+};
 
-export const makeAllNotiRead=async()=>{
+export const makeAllNotiRead = async () => {
   const token = getToken();
-  const res = await axios.put(`${api}/content/noti/read`,{}, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const res = await axios.put(
+    `${api}/content/noti/read`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
   return res.data;
-}
+};
+
+export const makeMessagesRead = async ({ chatId, readId }) => {
+  const token = getToken();
+  try {
+
+    const res =await axios.put(
+      `${api}/chat/${chatId}`,
+      { readId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 /***
  * Delete

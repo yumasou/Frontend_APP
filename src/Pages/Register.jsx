@@ -30,7 +30,7 @@ function Register() {
       setGlobalmsg({massage:"can't create user"});
     },
     onSuccess: (result) => {
-      setGlobalmsg({massage:"user created"});
+      setGlobalmsg({massage:"user created success"});
       navigate("/login");
     },
   });

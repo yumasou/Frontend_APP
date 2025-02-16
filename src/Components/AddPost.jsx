@@ -1,12 +1,11 @@
 import React, { useRef } from "react";
-import { useApp } from "../ThemedApp";
+import { queryClient, useApp } from "../ThemedApp";
 import { useMutation, useQuery } from "react-query";
 import { fetchPost, postPost } from "../libs/fetcher";
 
 function AddPost(props) {
   const contentRef = useRef();
   const { setShowForm, showForm, auth, setGlobalmsg } = useApp();
-  const { refetch } = useQuery("posts", fetchPost);
   const handleSubmit = () => {
     const content = contentRef.current.value;
     const userId = auth.id;
@@ -21,7 +20,7 @@ function AddPost(props) {
       setGlobalmsg({massage:"can't create post"});
     },
     onSuccess: (result) => {
-      refetch();
+      queryClient.invalidateQueries("posts")
       setGlobalmsg({massage:"add new post"});
       setShowForm(false);
     },
