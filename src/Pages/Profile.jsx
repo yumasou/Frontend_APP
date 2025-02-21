@@ -3,13 +3,14 @@ import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import PostItem from "../Components/PostItem";
 import { useMutation } from "react-query";
-import { queryClient } from "../ThemedApp";
+import { queryClient, useApp } from "../ThemedApp";
 import { fetchUser, deletePost } from "../libs/fetcher";
 import FollowButton from "../Components/FollowButton";
 import MessageButton from "../Components/MessageButton";
 function Profile() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const {auth}=useApp()
   const { isLoading, isError, error, data } = useQuery("users", () =>
     fetchUser(id)
   );
@@ -59,10 +60,10 @@ function Profile() {
             <div className="text-blue-600">{data._count.followers}</div>
             <div>Following</div>
           </div>
-          <div>
+          <div className={data.id===auth.id? "hidden":""}>
             <MessageButton userId={data.id} />
           </div>
-          <div>
+          <div className={data.id===auth.id? "hidden":""}>
             <FollowButton user={data} />
           </div>
         </div>
